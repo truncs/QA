@@ -22,6 +22,11 @@ from evaluate import exact_match_score, f1_score
 
 logging.basicConfig(level=logging.INFO)
 
+VERY_BIG_NUMBER = 1e30
+VERY_SMALL_NUMBER = 1e-30
+VERY_POSITIVE_NUMBER = VERY_BIG_NUMBER
+VERY_NEGATIVE_NUMBER = -VERY_BIG_NUMBER
+
 
 def get_optimizer(opt):
     if opt == "adam":
@@ -144,10 +149,6 @@ def bidirectional_dynamic_rnn(cell_fw, cell_bw, inputs, sequence_length=None,
     # FIXME : final state is not reshaped!
     return (fw_outputs, bw_outputs), final_state
 
-VERY_BIG_NUMBER = 1e30
-VERY_SMALL_NUMBER = 1e-30
-VERY_POSITIVE_NUMBER = VERY_BIG_NUMBER
-VERY_NEGATIVE_NUMBER = -VERY_BIG_NUMBER
 
 def exp_mask(val, mask, name=None):
     """Give very negative number to unmasked elements in val.
