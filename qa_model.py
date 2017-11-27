@@ -655,6 +655,12 @@ class QASystem(object):
         # Model saver
         saver = tf.train.Saver()
 
+        tic = time.time()
+        params = tf.trainable_variables()
+        num_params = sum(map(lambda t: np.prod(tf.shape(t.value()).eval()), params))
+        toc = time.time()
+        logging.info("Number of params: %d (retreival took %f secs)" % (num_params, toc - tic))
+
         while True:
             try:
                 
@@ -676,8 +682,3 @@ class QASystem(object):
 
             except tf.errors.OutOfRangeError:
                 break
-        tic = time.time()
-        params = tf.trainable_variables()
-        num_params = sum(map(lambda t: np.prod(tf.shape(t.value()).eval()), params))
-        toc = time.time()
-        logging.info("Number of params: %d (retreival took %f secs)" % (num_params, toc - tic))
